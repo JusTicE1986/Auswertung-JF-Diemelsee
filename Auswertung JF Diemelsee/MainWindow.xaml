@@ -1,0 +1,51 @@
+﻿<Window x:Class="Auswertung_JF_Diemelsee.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Auswertung_JF_Diemelsee" xmlns:vm="clr-namespace:Auswertung_JF_Diemelsee.ViewModel"
+        mc:Ignorable="d"
+        Title="Auswertung Jugendfeuerwehr Diemelsee" Height="1080" Width="1920" WindowState="Maximized">
+    <Window.DataContext>
+        <vm:ViewModelMainWindow/>
+    </Window.DataContext>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <StackPanel Grid.Column="0" Grid.Row="0" Margin="10">
+            
+        </StackPanel>
+        <StackPanel Grid.Column="0" Grid.Row="1" Margin="10">
+            <Label x:Name="lbl_teamname" Content="Jugendfeuerwehr:"/>
+            <TextBox x:Name="txt_teamname" Text="{Binding NewTeam.TeamName}"/>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <ComboBox Grid.Column="0" x:Name="cmb_Category" ItemsSource="{Binding}"/>
+                <CheckBox Grid.Column="1" HorizontalContentAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center" x:Name="chk_isOutOfCompetition" Content="außer Konkurrenz"/>
+            </Grid>
+            <Button x:Name="btn_AddNewTeam" Content="Mannschaft hinzufügen" Command="{Binding AddNewTeam}"/>
+        </StackPanel>
+        <DataGrid Grid.Column="0" Grid.Row="2" x:Name="dg_Teams" ItemsSource="{Binding Teams}"/>
+        <StackPanel Grid.Column="1" Grid.Row="1" Margin="10">
+            <Label x:Name="lbl_Vorname" Content="Vorname"></Label>
+            <TextBox x:Name="txt_Vorname" Text="{Binding NewMember.FirstName}"/>
+            <Label x:Name="lbl_Nachname" Content="Nachname"/>
+            <TextBox x:Name="txt_Nachname" Text="{Binding NewMember.LastName}"/>
+            <Label x:Name="lbl_Geburtsdatum" Content="Geburtsdatum"/>
+            <DatePicker x:Name="dtpick_birthdate" Text="{Binding NewMember.BirthDate, Mode=TwoWay, UpdateSourceTrigger=LostFocus, ConverterCulture=de-DE}"/>
+            <Button x:Name="btn_AddNewTeamMember" Content="Mitglied hinzufügen" Command="{Binding AddNewTeamMember}"/>
+        </StackPanel>
+        <DataGrid Grid.Column="1" Grid.Row="2" x:Name="dg_Members" ItemsSource="{Binding ElementName=dg_Teams, Path=SelectedItem.ListOfTeilnehmer}"/>
+    </Grid>
+</Window>
